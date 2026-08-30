@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NetSage - Evaluation</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar a {
+            text-decoration: none;
+            color: white;
+            background: #222;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-left: 8px;
+        }
+
+        .summary {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .case-list {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(180px, 1fr)
+                );
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .case-button {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .case-button:hover {
+            background: #eee;
+        }
+
+        .case-button.evaluated {
+            background: #e8f5e9;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .box {
+            background: #f7f7f7;
+            border-radius: 8px;
+            padding: 18px;
+            white-space: pre-wrap;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .evaluation-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .evaluation-buttons button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .correct {
+            background: #d9f2d9;
+        }
+
+        .partial {
+            background: #fff3cd;
+        }
+
+        .incorrect {
+            background: #f8d7da;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 90px;
+            margin-top: 15px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+
+            .columns {
+                grid-template-columns: 1fr;
+            }
+
+            .evaluation-buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>NetSage Evaluation</h1>
+
+            <div>
+                Manual evaluation of generated AI diagnoses
+            </div>
+
+        </div>
+
+        <div>
+
+            <a href="index.html">
+                Diagnosis
+            </a>
+
+            <a href="metrics.html">
+                Metrics
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="summary">
+
+        <strong id="summaryText">
+            Loading generated AI results...
+        </strong>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Generated AI Cases
+        </h2>
+
+        <p>
+            Only cases for which an AI diagnosis has
+            already been generated are shown here.
+        </p>
+
+        <div
+            id="caseList"
+            class="case-list"
+        ></div>
+
+    </div>
+
+
+    <div
+        id="casePanel"
+        class="panel"
+        style="display:none;"
+    >
+
+        <h2 id="caseTitle"></h2>
+
+
+        <div class="columns">
+
+            <div>
+
+                <div class="label">
+                    Ground Truth
+                </div>
+
+                <div
+                    id="groundTruth"
+                    class="box"
+                ></div>
+
+            </div>
+
+
+            <div>
+
+                <div class="label">
+                    AI Response
+                </div>
+
+                <div
+                    id="aiResponse"
+                    class="box"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="evaluationArea"
+            style="margin-top:25px;"
+        >
+
+            <h3>
+                Human Evaluation
+            </h3>
+
+            <p>
+                Compare the AI diagnosis against the
+                ground truth and choose one result.
+            </p>
+
+
+            <div class="evaluation-buttons">
+
+                <button
+                    class="correct"
+                    onclick="saveEvaluation('Correct')"
+                >
+                    Correct
+                </button>
+
+                <button
+                    class="partial"
+                    onclick="saveEvaluation('Partially Correct')"
+                >
+                    Partially Correct
+                </button>
+
+                <button
+                    class="incorrect"
+                    onclick="saveEvaluation('Incorrect')"
+                >
+                    Incorrect
+                </button>
+
+            </div>
+
+
+            <textarea
+                id="reviewerNotes"
+                placeholder="Optional reviewer notes..."
+            ></textarea>
+
+        </div>
+
+
+        <div id="status"></div>
+
+    </div>
+
+</div>
+
+
+<script src="evaluation.js"></script>
+
+</body>
+
+</html>

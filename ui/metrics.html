@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NetSage - Metrics</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar a {
+            text-decoration: none;
+            color: white;
+            background: #222;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-left: 8px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .bar {
+            background: #eee;
+            height: 24px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #555;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>NetSage Metrics</h1>
+
+            <div>
+                Human evaluation results
+            </div>
+
+        </div>
+
+        <div>
+
+            <a href="index.html">
+                Diagnosis
+            </a>
+
+            <a href="evaluation.html">
+                Evaluation
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="cards"
+        class="cards"
+    ></div>
+
+
+    <div class="panel">
+
+        <h2>
+            AI Agreement
+        </h2>
+
+        <div id="agreement"></div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Results by Category
+        </h2>
+
+        <div id="categoryTable"></div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Results by Severity
+        </h2>
+
+        <div id="severityTable"></div>
+
+    </div>
+
+</div>
+
+
+<script src="metrics.js"></script>
+
+</body>
+
+</html>

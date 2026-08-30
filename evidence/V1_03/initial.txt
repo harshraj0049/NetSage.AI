@@ -1,0 +1,84 @@
+CASE ID: V1_03
+CATEGORY: ACL
+TITLE: ACL Blocking Traffic Between PC0 and Server0
+
+==================================================
+EVIDENCE 1: CONNECTIVITY TESTS FROM PC0
+==================================================
+
+Command:
+ping 192.168.20.10
+
+Output:
+Pinging 192.168.20.10 with 32 bytes of data:
+
+Reply from 192.168.10.1: Destination host unreachable.
+Reply from 192.168.10.1: Destination host unreachable.
+Reply from 192.168.10.1: Destination host unreachable.
+Reply from 192.168.10.1: Destination host unreachable.
+
+Ping statistics for 192.168.20.10:
+Packets: Sent = 4, Received = 0, Lost = 4 (100% loss)
+
+Observation:
+PC0 cannot reach Server0 at 192.168.20.10.
+
+
+Command:
+ping 192.168.10.1
+
+Output:
+Pinging 192.168.10.1 with 32 bytes of data:
+
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.1: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.10.1:
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+
+Observation:
+PC0 can successfully reach its default gateway at 192.168.10.1.
+
+
+==================================================
+EVIDENCE 2: ROUTING TABLE
+==================================================
+
+Device: Router0
+
+Command:
+show ip route
+
+Relevant Output:
+
+C 192.168.10.0/24 is directly connected, GigabitEthernet0/0
+L 192.168.10.1/32 is directly connected, GigabitEthernet0/0
+
+C 192.168.20.0/24 is directly connected, GigabitEthernet0/1
+L 192.168.20.1/32 is directly connected, GigabitEthernet0/1
+
+Observation:
+Router0 has directly connected routes to both the
+192.168.10.0/24 and 192.168.20.0/24 networks.
+
+
+==================================================
+EVIDENCE 3: ROUTER INTERFACE STATUS
+==================================================
+
+Device: Router0
+
+Command:
+show ip interface brief
+
+Output:
+
+Interface              IP-Address      Status    Protocol
+GigabitEthernet0/0     192.168.10.1    up        up
+GigabitEthernet0/1     192.168.20.1    up        up
+
+Observation:
+Both router interfaces required for communication
+between the two networks are operational.

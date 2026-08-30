@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NetSage AI</title>
+    
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-top: 20px;
+        }
+
+        label:first-child {
+            margin-top: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        #result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            min-height: 80px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>NetSage AI</h1>
+
+        <div class="subtitle">
+            AI-assisted network troubleshooting
+        </div>
+        <div style="margin-bottom:20px;">
+
+        <a
+            href="evaluation.html"
+            style="
+                text-decoration:none;
+                background:#222;
+                color:white;
+                padding:10px 16px;
+                border-radius:6px;
+                margin-right:8px;
+            "
+        >
+            Evaluation
+        </a>
+
+        <a
+            href="metrics.html"
+            style="
+                text-decoration:none;
+                background:#222;
+                color:white;
+                padding:10px 16px;
+                border-radius:6px;
+            "
+        >
+            Metrics
+        </a>
+
+    </div>
+
+        <div class="card">
+            <div style="margin-bottom: 15px;">
+
+                <label for="caseId">
+                    Test Case ID (optional)
+                </label>
+
+                <input
+                    id="caseId"
+                    type="text"
+                    placeholder="Example: V1_01"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        margin-top:6px;
+                        border:1px solid #ccc;
+                        border-radius:6px;
+                    "
+                >
+
+                <small>
+                    Use this when testing one of the 30 benchmark cases.
+                    Leave blank for normal troubleshooting.
+                </small>
+
+            </div>
+            <label for="symptom">
+                Initial Symptom
+            </label>
+
+            <textarea
+                id="symptom"
+                placeholder="Example: PC0 cannot reach Server0 at 192.168.20.10">
+            </textarea>
+
+
+            <label for="evidence">
+                Current Evidence
+            </label>
+
+            <textarea
+                id="evidence"
+                placeholder="Paste Cisco Packet Tracer command output here...">
+            </textarea>
+
+
+            <button onclick="diagnose()">
+                Diagnose
+            </button>
+            <div id="reviewSection" style="display: none;">
+                <h3>Human Review</h3>
+
+                <button onclick="approveDiagnosis()">
+                Approve
+                </button>
+
+                <button onclick="editDiagnosis()">
+                Edit
+                </button>
+
+                <button onclick="rejectDiagnosis()">
+                Reject
+                </button>
+
+            </div>
+            <div id="status"></div>
+
+            <pre id="result"></pre>
+
+        </div>
+
+    </div>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

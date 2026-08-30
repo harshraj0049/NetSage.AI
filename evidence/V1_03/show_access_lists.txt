@@ -1,0 +1,23 @@
+==================================================
+EVIDENCE 4: ACCESS CONTROL LIST
+==================================================
+
+Device: Router0
+
+Command:
+show access-lists
+
+Output:
+
+Extended IP access list 101
+
+10 deny icmp host 192.168.10.10 host 192.168.20.10
+20 permit ip any any
+
+Observation:
+ACL 101 explicitly denies ICMP traffic from PC0
+(192.168.10.10) to Server0 (192.168.20.10).
+
+The deny rule has 4 matches, corresponding to the
+four failed ping attempts.
+

@@ -4,4 +4,6 @@ langchain-google-genai
 langchain_community
 langchain_groq
 langgraph
+fastapi
+uvicorn
 
